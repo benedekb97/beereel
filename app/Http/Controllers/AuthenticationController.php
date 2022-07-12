@@ -61,4 +61,9 @@ class AuthenticationController extends Controller
 
         return new RedirectResponse(route('login'));
     }
+
+    public function register(): Factory|View|Application
+    {
+        return view('register');
+    }
 }
