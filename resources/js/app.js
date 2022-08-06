@@ -1,2 +1,2 @@
-require('./bootstrap');
-require('bootstrap');
+require('jquery');
+require('resources/js/bootstrap');
