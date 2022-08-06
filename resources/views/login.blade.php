@@ -1,4 +1,4 @@
-@extends('views.layouts.main')
+@extends('layouts.main')
 
 @section('title', 'Bejelentkezés')
 

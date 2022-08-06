@@ -17,4 +17,8 @@ interface PostInterface extends ResourceInterface
     public function getImagePath(): ?string;
 
     public function setImagePath(?string $imagePath): void;
+
+    public function getFrontImagePath(): ?string;
+
+    public function getBackImagePath(): ?string;
 }

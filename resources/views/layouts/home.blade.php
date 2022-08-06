@@ -23,6 +23,13 @@
                             <a class="nav-link" href="#">Profilom</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav ms-auto">
+                        @if (\Auth::user() !== null)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('logout') }}">Kijelentkezés</a>
+                        </li>
+                        @endif
+                    </ul>
                 </div>
             </div>
         </nav>

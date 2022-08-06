@@ -50,4 +50,16 @@ class Post implements PostInterface
     {
         $this->imagePath = $imagePath;
     }
+
+    public function getFrontImagePath(): ?string
+    {
+        return $this->getImagePath();
+    }
+
+    public function getBackImagePath(): ?string
+    {
+        return null !== $this->getImagePath()
+            ? str_replace('front', 'back', $this->getImagePath())
+            : null;
+    }
 }

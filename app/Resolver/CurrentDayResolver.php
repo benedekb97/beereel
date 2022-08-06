@@ -36,6 +36,16 @@ class CurrentDayResolver implements CurrentDayResolverInterface
             ->getQuery()
             ->getOneOrNullResult();
 
+        if ($day->getTime() > new \DateTime()) {
+            $day = $this->dayRepository->createQueryBuilder('o')
+                ->add('where', 'o.time between :yesterday and :today')
+                ->setParameter('yesterday', $this->getYesterday())
+                ->setParameter('today', $this->getToday())
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
+        }
+
         if (!$day instanceof DayInterface) {
             $day = $this->dayGenerator->generate();
         }
@@ -51,5 +61,10 @@ class CurrentDayResolver implements CurrentDayResolverInterface
     private function getTomorrow(): \DateTimeInterface
     {
         return new \DateTime('tomorrow');
+    }
+
+    private function getYesterday(): \DateTimeInterface
+    {
+        return new \DateTime('yesterday');
     }
 }
