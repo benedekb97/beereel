@@ -1,4 +1,4 @@
-@extends('views.layouts.home')
+@extends('layouts.home')
 
 @section('title', 'Kagi')
 

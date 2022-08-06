@@ -1,2 +1,2 @@
 require('jquery');
-require('resources/js/bootstrap');
+require('bootstrap');
