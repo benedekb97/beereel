@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,6 +22,14 @@ class User implements UserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Post::class)]
+    private Collection $posts;
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
 
     public function getUsername(): ?string
     {
@@ -78,5 +88,31 @@ class User implements UserInterface
     public function getRememberTokenName()
     {
         return null;
+    }
+
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function hasPost(PostInterface $post): bool
+    {
+        return $this->posts->contains($post);
+    }
+
+    public function addPost(PostInterface $post): void
+    {
+        if (!$this->hasPost($post)) {
+            $this->posts->add($post);
+            $post->setUser($this);
+        }
+    }
+
+    public function removePost(PostInterface $post): void
+    {
+        if ($this->hasPost($post)) {
+            $this->posts->removeElement($post);
+            $post->setUser(null);
+        }
     }
 }

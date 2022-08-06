@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 interface UserInterface extends ResourceInterface, Authenticatable
@@ -19,4 +20,12 @@ interface UserInterface extends ResourceInterface, Authenticatable
     public function getCreatedAt(): ?\DateTimeInterface;
 
     public function setCreatedAtNow(): void;
+
+    public function getPosts(): Collection;
+
+    public function hasPost(PostInterface $post): bool;
+
+    public function addPost(PostInterface $post): void;
+
+    public function removePost(PostInterface $post): void;
 }
