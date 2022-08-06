@@ -62,8 +62,12 @@ class AuthenticationController extends Controller
         return new RedirectResponse(route('login'));
     }
 
-    public function register(Request $request): Factory|View|Application
+    public function register(Request $request): Factory|View|Application|Response
     {
+        if ($this->auth->check()) {
+            return new RedirectResponse(route('index'));
+        }
+
         $kagi = $request->get('kagi');
 
         return view('register', ['kagi' => $kagi]);
@@ -71,6 +75,10 @@ class AuthenticationController extends Controller
 
     public function registration(Request $request): Response
     {
+        if ($this->auth->check()) {
+            return new RedirectResponse(route('index'));
+        }
+
         $username = $request->get('username');
         $password = $request->get('password');
         $password2 = $request->get('password2');
