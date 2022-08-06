@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Entity\Day;
 use App\Entity\UserInterface;
 use App\Repository\PostRepository;
 use App\Repository\PostRepositoryInterface;
@@ -11,15 +12,15 @@ use App\Resolver\CurrentDayResolver;
 use App\Resolver\CurrentDayResolverInterface;
 use App\Resolver\PostResolver;
 use App\Resolver\PostResolverInterface;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Console\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use function Symfony\Component\String\b;
 
 class DashboardController
 {
@@ -31,17 +32,21 @@ class DashboardController
 
     private PostResolverInterface $postResolver;
 
+    private EntityManagerInterface $entityManager;
+
     public function __construct(
         CurrentDayResolver $currentDayResolver,
         PostRepository $postRepository,
         AuthManager $authManager,
-        PostResolver $postResolver
+        PostResolver $postResolver,
+        EntityManager $entityManager
     )
     {
         $this->currentDayResolver = $currentDayResolver;
         $this->postRepository = $postRepository;
         $this->auth = $authManager->guard(config('auth.guards.default'));
         $this->postResolver = $postResolver;
+        $this->entityManager = $entityManager;
     }
 
     public function index(): Factory|View|Application|Response
@@ -58,11 +63,21 @@ class DashboardController
             return new RedirectResponse(route('create'));
         }
 
+        $dayRepository = $this->entityManager->getRepository(Day::class);
+
+        $nextDay = $dayRepository->createQueryBuilder('o')
+            ->where('o.time > :time')
+            ->setParameter('time', new \DateTime())
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
         return view('dashboard',
         [
             'day' => $this->currentDayResolver->resolve(),
             'posts' => $this->postRepository->getCurrentPosts(),
             'currentPost' => $currentPost,
+            'nextDay' => $nextDay,
         ]);
     }
 
