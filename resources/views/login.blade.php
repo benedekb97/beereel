@@ -3,7 +3,7 @@
 @section('title', 'Bejelentkezés')
 
 @section('content')
-    <div class="col-6 offset-3 mt-3">
+    <div class="col-lg-6 offset-lg-3 mt-3">
         <form action="{{ route('authenticate') }}" method="POST">
             <div class="mb-3 input-group">
                 <input type="text" name="username" id="username" placeholder="Felhasználónév"
