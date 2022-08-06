@@ -8,5 +8,5 @@ use App\Entity\DayInterface;
 
 interface DayGeneratorInterface
 {
-    public function generate(): DayInterface;
+    public function generate(?\DateTimeInterface $date = null): DayInterface;
 }
