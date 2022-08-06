@@ -62,8 +62,40 @@ class AuthenticationController extends Controller
         return new RedirectResponse(route('login'));
     }
 
-    public function register(): Factory|View|Application
+    public function register(Request $request): Factory|View|Application
     {
-        return view('register');
+        $kagi = $request->get('kagi');
+
+        return view('register', ['kagi' => $kagi]);
+    }
+
+    public function registration(Request $request): Response
+    {
+        $username = $request->get('username');
+        $password = $request->get('password');
+        $password2 = $request->get('password2');
+
+        if ($password !== $password2 || $password === '' || strlen($password) < 8) {
+            return new RedirectResponse(route('register', ['kagi' => 'password']));
+        }
+
+        $userRepository = $this->entityManager->getRepository(User::class);
+
+        if ($userRepository->findOneBy(['username' => $username]) !== null) {
+            return new RedirectResponse(route('register', ['kagi' => 'username']));
+        }
+
+        $user = new User();
+
+        $user->setUsername($username);
+        $user->setPassword(bcrypt($password));
+        $user->setCreatedAtNow();
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        $this->auth->login($user);
+
+        return new RedirectResponse(route('index'));
     }
 }
