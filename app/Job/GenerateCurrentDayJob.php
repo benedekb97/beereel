@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace App\Job;
 
 use App\Entity\Day;
+use App\Generator\DayGenerator;
+use App\Generator\DayGeneratorInterface;
+use App\Resolver\CurrentDayResolver;
+use App\Resolver\CurrentDayResolverInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -15,30 +19,22 @@ class GenerateCurrentDayJob
 
     private EntityManagerInterface $entityManager;
 
+    private CurrentDayResolverInterface $currentDayResolver;
+
     public function __construct(
-        EntityManager $entityManager
+        EntityManager $entityManager,
+        CurrentDayResolver $currentDayResolver
     )
     {
         $this->entityManager = $entityManager;
+        $this->currentDayResolver = $currentDayResolver;
     }
 
     public function __invoke(): void
     {
-        $day = new Day();
-
-        $day->setTime($this->generateTime());
+        $day = $this->currentDayResolver->resolve();
 
         $this->entityManager->persist($day);
         $this->entityManager->flush();
-    }
-
-    private function generateTime(): \DateTimeInterface
-    {
-        return new \DateTime();
-    }
-
-    private function getCurrentDay()
-    {
-
     }
 }
