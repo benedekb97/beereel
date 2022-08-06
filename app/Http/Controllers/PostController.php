@@ -56,6 +56,10 @@ class PostController extends Controller
 
     public function upload(Request $request): Response
     {
+        if ($this->postResolver->resolve($this->getUser()) !== null) {
+            return new RedirectResponse(route('index'));
+        }
+
         $front = $request->files->get('front');
         $back = $request->files->get('back');
 
