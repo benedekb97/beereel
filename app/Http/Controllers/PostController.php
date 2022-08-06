@@ -79,6 +79,14 @@ class PostController extends Controller
         $frontFirstFront = Image::make(storage_path('app/images/' . $frontPath));
         $frontFirstBack = Image::make(storage_path('app/images/' . $backPath));
 
+        if ($frontFirstFront->getWidth() > $frontFirstFront->getHeight()) {
+            $frontFirstFront->rotate(270);
+        }
+
+        if ($frontFirstBack->getWidth() > $frontFirstBack->getHeight()) {
+            $frontFirstBack->rotate(270);
+        }
+
         $frontFirstBack->resize(200, null, static function ($constraint) {
             $constraint->aspectRatio();
         });
@@ -88,6 +96,14 @@ class PostController extends Controller
 
         $backFirstFront = Image::make(storage_path('app/images/' . $frontPath));
         $backFirstBack = Image::make(storage_path('app/images/' . $backPath));
+
+        if ($backFirstBack->getWidth() > $backFirstBack->getHeight()) {
+            $backFirstBack->rotate(270);
+        }
+
+        if ($backFirstFront->getWidth() > $backFirstFront->getHeight()) {
+            $backFirstFront->rotate(270);
+        }
 
         $backFirstFront->resize(200, null, static function ($constraint) {
             $constraint->aspectRatio();
