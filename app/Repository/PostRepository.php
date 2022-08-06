@@ -29,6 +29,7 @@ class PostRepository implements PostRepositoryInterface
         return $this->entityManager->getRepository(Post::class)->createQueryBuilder('o')
             ->where('o.day = :day')
             ->setParameter('day', $this->currentDayResolver->resolve())
+            ->addOrderBy('o.id', 'DESC')
             ->getQuery()
             ->getResult();
     }
