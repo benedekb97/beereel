@@ -100,10 +100,10 @@ class PostController extends Controller
             $this->filesystem->makeDirectory('images/posts');
         }
 
-        $backFirstBack->save(storage_path('app/images/posts/back.' . $this->getUser()->getId() . '.' . $post->getDay()->getId(). '.' . $back->getClientOriginalExtension()), 80);
-        $frontFirstFront->save(storage_path('app/images/posts/front.' . $this->getUser()->getId() . '.' . $post->getDay()->getId() . '.' . $front->getClientOriginalExtension()), 80);
+        $backFirstBack->save(storage_path('app/public/images/posts/back.' . $this->getUser()->getId() . '.' . $post->getDay()->getId(). '.' . $back->getClientOriginalExtension()), 80);
+        $frontFirstFront->save(storage_path('app/public/images/posts/front.' . $this->getUser()->getId() . '.' . $post->getDay()->getId() . '.' . $front->getClientOriginalExtension()), 80);
 
-        $post->setImagePath('storage/app/images/posts/front.' . $this->getUser()->getId() . '.' . $post->getDay()->getId() . '.' . $front->getClientOriginalExtension());
+        $post->setImagePath('storage/images/posts/front.' . $this->getUser()->getId() . '.' . $post->getDay()->getId() . '.' . $front->getClientOriginalExtension());
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();
