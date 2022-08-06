@@ -87,7 +87,7 @@ class PostController extends Controller
             $frontFirstBack->rotate(270);
         }
 
-        $frontFirstBack->resize(200, null, static function ($constraint) {
+        $frontFirstBack->resize(150, null, static function ($constraint) {
             $constraint->aspectRatio();
         });
         $frontFirstFront->resize(500, null, static function ($constraint) {
@@ -105,7 +105,7 @@ class PostController extends Controller
             $backFirstFront->rotate(270);
         }
 
-        $backFirstFront->resize(200, null, static function ($constraint) {
+        $backFirstFront->resize(150, null, static function ($constraint) {
             $constraint->aspectRatio();
         });
         $backFirstBack->resize(500, null, static function ($constraint) {
