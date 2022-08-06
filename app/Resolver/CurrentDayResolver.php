@@ -9,6 +9,7 @@ use App\Entity\DayInterface;
 use App\Generator\DayGenerator;
 use App\Generator\DayGeneratorInterface;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -18,12 +19,15 @@ class CurrentDayResolver implements CurrentDayResolverInterface
 
     private DayGeneratorInterface $dayGenerator;
 
+    private EntityManagerInterface $entityManager;
+
     public function __construct(
         EntityManager $entityManager,
         DayGenerator $dayGenerator
     ) {
         $this->dayRepository = $entityManager->getRepository(Day::class);
         $this->dayGenerator = $dayGenerator;
+        $this->entityManager = $entityManager;
     }
 
     public function resolve(): DayInterface
@@ -36,7 +40,7 @@ class CurrentDayResolver implements CurrentDayResolverInterface
             ->getQuery()
             ->getOneOrNullResult();
 
-        if ($day->getTime() > new \DateTime()) {
+        if (null === $day || $day->getTime() > new \DateTime()) {
             $day = $this->dayRepository->createQueryBuilder('o')
                 ->add('where', 'o.time between :yesterday and :today')
                 ->setParameter('yesterday', $this->getYesterday())
@@ -48,6 +52,9 @@ class CurrentDayResolver implements CurrentDayResolverInterface
 
         if (!$day instanceof DayInterface) {
             $day = $this->dayGenerator->generate();
+
+            $this->entityManager->persist($day);
+            $this->entityManager->flush();
         }
 
         return $day;
