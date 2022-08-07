@@ -19,6 +19,9 @@ class Post implements PostInterface
     #[ORM\ManyToOne(targetEntity: Day::class)]
     private ?DayInterface $day = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $createdAt = null;
+
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $imagePath = null;
 
@@ -40,6 +43,16 @@ class Post implements PostInterface
     public function setDay(?DayInterface $day): void
     {
         $this->day = $day;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAtNow(): void
+    {
+        $this->createdAt = new \DateTime();
     }
 
     public function getImagePath(): ?string

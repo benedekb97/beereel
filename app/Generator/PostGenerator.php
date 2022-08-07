@@ -15,6 +15,8 @@ class PostGenerator implements PostGeneratorInterface
     {
         $post = new Post();
 
+        $post->setCreatedAtNow();
+
         $user->addPost($post);
         $day->addPost($post);
 

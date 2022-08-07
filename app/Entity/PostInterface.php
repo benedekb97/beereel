@@ -14,6 +14,10 @@ interface PostInterface extends ResourceInterface
 
     public function setDay(?DayInterface $day): void;
 
+    public function getCreatedAt(): ?\DateTimeInterface;
+
+    public function setCreatedAtNow(): void;
+
     public function getImagePath(): ?string;
 
     public function setImagePath(?string $imagePath): void;
