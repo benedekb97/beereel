@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
+#[ORM\UniqueConstraint(columns: ['user_id', 'day_id'])]
 class Post implements PostInterface
 {
     use ResourceTrait;

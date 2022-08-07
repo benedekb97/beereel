@@ -128,10 +128,6 @@ class PostController extends Controller
         $this->entityManager->persist($post);
         $this->entityManager->flush();
 
-        if (null !== $this->postResolver->resolve($this->getUser())) {
-            return new RedirectResponse(route('index'));
-        }
-
         return new RedirectResponse(route('index'));
     }
 
