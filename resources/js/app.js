@@ -60,7 +60,7 @@ window.$('.reaction-button').click(
                         $(`#react-${postId}-${e.reactionType}`).removeClass('bg-dark');
                     }
 
-                    $(`#reaction-modal-${postId}`).modal('dismiss');
+                    $(`#reaction-modal-${postId}`).modal('hide');
                 },
                 failure: function (e) {
                     console.log(e);
