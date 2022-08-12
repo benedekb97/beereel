@@ -78,6 +78,7 @@ class DashboardController
             'posts' => $this->postRepository->getCurrentPosts(),
             'currentPost' => $currentPost,
             'nextDay' => $nextDay,
+            'user' => $this->auth->user(),
         ]);
     }
 

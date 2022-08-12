@@ -36,6 +36,7 @@
         <div class="container">
             @yield('content')
         </div>
+        @yield('modals')
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

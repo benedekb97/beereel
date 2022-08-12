@@ -33,22 +33,11 @@ class CurrentDayResolver implements CurrentDayResolverInterface
     public function resolve(): DayInterface
     {
         $day = $this->dayRepository->createQueryBuilder('o')
-            ->add('where', 'o.time between :today and :tomorrow')
-            ->setParameter('today', $this->getToday())
-            ->setParameter('tomorrow', $this->getTomorrow())
+            ->add('where', 'o.time < :now')
+            ->setParameter('now', new \DateTime())
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
-
-        if (null === $day || $day->getTime() > new \DateTime()) {
-            $day = $this->dayRepository->createQueryBuilder('o')
-                ->add('where', 'o.time between :yesterday and :today')
-                ->setParameter('yesterday', $this->getYesterday())
-                ->setParameter('today', $this->getToday())
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
-        }
 
         if (!$day instanceof DayInterface) {
             $day = $this->dayGenerator->generate();

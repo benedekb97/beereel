@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('', [AuthenticationController::class, 'login'])->name('login');
@@ -24,5 +25,7 @@ Route::group(
         Route::get('create', [DashboardController::class, 'create'])->name('create');
 
         Route::post('upload', [PostController::class, 'upload'])->name('upload');
+
+        Route::post('api/reaction', [ReactionController::class, 'reaction'])->name('api.reaction');
     }
 );
