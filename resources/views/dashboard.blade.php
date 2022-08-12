@@ -4,6 +4,7 @@
 
 @section('content')
     <input type="hidden" id="reaction-url" value="{{ route('api.reaction') }}">
+    <input type="hidden" id="user-id" value="{{ \Auth::id() }}">
     @isset($nextDay)
     <div class="col-lg-6 offset-lg-3 mt-3">
         <h3>A kövi <b>BeerEel</b> {{ $nextDay->getTime()->format('H:i:s') }}-kor lesz @if($nextDay->getTime()->format('d') !== (new \DateTime())->format('d'))
@@ -20,9 +21,16 @@
                         <i>{{ (new Carbon\Carbon($post->getCreatedAt()))->diffForHumans() }}</i>
                     </div>
                     <div style="text-align:right" class="col">
-                        @if ($post->getReactions()->count() > 0)
-                            <button class="btn btn-sm bg-dark border-0 text-white" type="button" data-bs-toggle="modal" data-bs-target="#reactions-{{ $post->getId() }}">{{ $post->getReactions()->count() }} reacc</button>
-                        @endif
+                        <button
+                            class="btn btn-sm bg-dark border-0 text-white"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#reactions-{{ $post->getId() }}"
+                            id="reaction-button-{{ $post->getId() }}"
+                            @if ($post->getReactions()->count() === 0)
+                                style="display:none"
+                            @endif
+                        ><span id="reaction-count-{{ $post->getId() }}">{{ $post->getReactions()->count() }}</span> reacc</button>
                         @if ($post->getUser() !== \Auth::user())
                             <button class="btn btn-sm bg-dark border-0 text-white" type="button" data-bs-toggle="modal" data-bs-target="#reaction-modal-{{ $post->getId() }}">+</button>
                         @endif
@@ -38,11 +46,11 @@
         <div class="modal fade" id="reactions-{{ $post->getId() }}" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content bg-dark text-white">
-                    <div class="modal-body">
+                    <div class="modal-body" id="reaction-container-{{ $post->getId() }}">
                         @foreach ($post->getReactions() as $reaction)
-                            <div class="row">
+                            <div class="row" id="reaction-list-post-{{ $post->getId() }}-user-{{ \Auth::id() }}">
                                 <div class="col">{{ $reaction->getUser()->getUsername() }}</div>
-                                <div class="col" style="text-align:right;">{!! $reaction->getType()->getHtmlCharacter() !!}</div>
+                                <div class="col" style="text-align:right;" id="reaction-{{ $reaction->getId() }}">{!! $reaction->getType()->getHtmlCharacter() !!}</div>
                             </div>
                         @endforeach
                     </div>
@@ -54,6 +62,7 @@
             <div class="modal-dialog">
                 <div class="modal-content bg-dark text-white">
                     <div class="modal-body">
+                        <button type="button" id="close-modal-{{ $post->getId() }}" style="display:none;" data-bs-dismiss="modal">lol geciocsmány de leszarom</button>
                         <div class="row">
                             <div class="col-2 d-grid">
                                 <button type="button" class="

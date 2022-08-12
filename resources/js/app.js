@@ -1,8 +1,8 @@
 require('jquery');
 require('bootstrap');
 
-import Modal from 'bootstrap';
 import $ from 'jquery';
+import Modal from 'bootstrap/js/src/modal';
 window.$ = window.jquery = $;
 
 window.switchTo = function(e, id)
@@ -37,6 +37,7 @@ window.$('.reaction-button').click(
     function (event) {
         const reactionType = $(this).data('react');
         const postId = $(this).data('post-id');
+        const userId = $('#user-id').val();
 
         $.ajax(
             {
@@ -61,10 +62,41 @@ window.$('.reaction-button').click(
                         $(`#react-${postId}-${e.reactionType}`).removeClass('bg-dark');
                     }
 
+                    let reactionButton = $(`#reaction-button-${postId}`);
+                    let reactionCount = $(`#reaction-count-${postId}`);
 
-                    let modal = new bootstrap.Modal(document.getElementById(`#reaction-modal-${postId}`));
+                    if ('reactionCount' in e) {
+                        let newReactionCount = e.reactionCount;
 
-                    modal.hide();
+                        reactionButton.css('display','inline');
+                        reactionCount.html(newReactionCount);
+
+                        if ('username' in e && 'reactionHTML' in e && 'id' in e) {
+                            if ($(`#reaction-${e.id}`).length) {
+                                $(`#reaction-${e.id}`).html(e.reactionHTML);
+                            } else {
+                                let reactionContainer = $(`#reaction-container-${postId}`);
+
+                                let originalContent = reactionContainer.html();
+
+                                originalContent += (`<div class="row" id="reaction-list-post-${postId}-user-${userId}"><div class="col">${e.username}</div><div class="col" style="text-align:right;" id="reaction-${e.id}">${e.reactionHTML}</div></div>`);
+
+                                reactionContainer.html(originalContent);
+                            }
+                        }
+                    } else {
+                        let newReactionCount = reactionCount.html() - 1;
+
+                        if (newReactionCount === 0) {
+                            reactionButton.css('display','none');
+                        } else {
+                            reactionCount.html(newReactionCount);
+                        }
+
+                        $(`#reaction-list-post-${postId}-user-${userId}`).remove();
+                    }
+
+                    $(`#close-modal-${postId}`).click();
                 },
                 failure: function (e) {
                     console.log(e);

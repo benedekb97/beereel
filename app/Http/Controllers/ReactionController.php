@@ -86,12 +86,18 @@ class ReactionController extends Controller
 
             $this->entityManager->persist($reaction);
             $this->entityManager->flush();
+
+            $this->entityManager->refresh($reaction);
         }
 
         return new JsonResponse(
             [
                 'post' => $post->getId(),
                 'reactionType' => $reactionTypeString,
+                'reactionCount' => $post->getReactions()->count(),
+                'reactionHTML' => $reaction->getType()->getHtmlCharacter(),
+                'username' => $user->getUsername(),
+                'id' => $reaction->getId(),
             ]
         );
     }
