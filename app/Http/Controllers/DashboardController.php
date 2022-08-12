@@ -78,7 +78,7 @@ class DashboardController
 
         if (!$this->auth->user()->isAdministrator()) {
             $posts = array_filter($posts, static function (PostInterface $post) {
-                return !$post->isBlocked();
+                return !$post->isBlocked() || $post->getUser() === $this->auth->user();
             });
         }
 
