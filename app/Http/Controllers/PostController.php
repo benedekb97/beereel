@@ -19,7 +19,6 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemManager;
 use Intervention\Image\Facades\Image;
-use Intervention\Image\Size;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,6 +60,10 @@ class PostController extends Controller
     {
         if ($this->postResolver->resolve($this->getUser()) !== null) {
             return new RedirectResponse(route('index'));
+        }
+
+        if ($this->getUser()->isBlocked()) {
+            return new RedirectResponse(route('blocked'));
         }
 
         $front = $request->files->get('front');
@@ -152,7 +155,7 @@ class PostController extends Controller
         $this->entityManager->persist($post);
         $this->entityManager->flush();
 
-        return new RedirectResponse(route('index'));
+        return redirect()->back();
     }
 
     private function getUser(): UserInterface

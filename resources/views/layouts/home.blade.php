@@ -22,6 +22,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('profile') }}">Profilom</a>
                         </li>
+                        @if (\Auth::check() && \Auth::user()->isAdministrator())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.users') }}">Felhasználók</a>
+                            </li>
+                        @endif
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         @if (\Auth::user() !== null)

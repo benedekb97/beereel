@@ -35,7 +35,7 @@
                             <button class="btn btn-sm bg-dark border-0 text-white" type="button" data-bs-toggle="modal" data-bs-target="#reaction-modal-{{ $post->getId() }}">+</button>
                         @endif
                         @if (\Auth::user()->isAdministrator())
-                            <a class="btn btn-sm btn-danger border-0" href="{{ route('block', ['postId' => $post->getId()]) }}">
+                            <a class="btn btn-sm btn-danger border-0" href="{{ route('admin.block', ['postId' => $post->getId()]) }}">
                                 @if ($post->isBlocked())
                                     felold
                                 @else

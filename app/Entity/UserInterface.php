@@ -32,4 +32,8 @@ interface UserInterface extends ResourceInterface, Authenticatable
     public function isAdministrator(): bool;
 
     public function setAdministrator(bool $administrator): void;
+
+    public function isBlocked(): bool;
+
+    public function setBlocked(bool $blocked): void;
 }

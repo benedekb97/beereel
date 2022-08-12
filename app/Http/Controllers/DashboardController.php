@@ -113,4 +113,13 @@ class DashboardController
 
         return view('profile', ['posts' => $posts]);
     }
+
+    public function blocked(): Factory|View|Application|RedirectResponse
+    {
+        if (!$this->auth->user()->isBlocked()) {
+            return new RedirectResponse(route('index'));
+        }
+
+        return view('blocked');
+    }
 }

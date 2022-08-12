@@ -29,6 +29,9 @@ class User implements UserInterface
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $administrator = false;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $blocked = false;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -127,5 +130,15 @@ class User implements UserInterface
     public function setAdministrator(bool $administrator): void
     {
         $this->administrator = $administrator;
+    }
+
+    public function isBlocked(): bool
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(bool $blocked): void
+    {
+        $this->blocked = $blocked;
     }
 }
