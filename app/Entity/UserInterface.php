@@ -28,4 +28,8 @@ interface UserInterface extends ResourceInterface, Authenticatable
     public function addPost(PostInterface $post): void;
 
     public function removePost(PostInterface $post): void;
+
+    public function isAdministrator(): bool;
+
+    public function setAdministrator(bool $administrator): void;
 }

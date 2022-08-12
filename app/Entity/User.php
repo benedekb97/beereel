@@ -26,6 +26,9 @@ class User implements UserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Post::class)]
     private Collection $posts;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $administrator = false;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -114,5 +117,15 @@ class User implements UserInterface
             $this->posts->removeElement($post);
             $post->setUser(null);
         }
+    }
+
+    public function isAdministrator(): bool
+    {
+        return $this->administrator;
+    }
+
+    public function setAdministrator(bool $administrator): void
+    {
+        $this->administrator = $administrator;
     }
 }

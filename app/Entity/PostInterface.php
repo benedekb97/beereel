@@ -37,4 +37,8 @@ interface PostInterface extends ResourceInterface
     public function removeReaction(ReactionInterface $reaction): void;
 
     public function getReactionForUser(UserInterface $user): ?ReactionInterface;
+
+    public function isBlocked(): bool;
+
+    public function setBlocked(bool $blocked): void;
 }

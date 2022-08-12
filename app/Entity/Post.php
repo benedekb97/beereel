@@ -30,6 +30,9 @@ class Post implements PostInterface
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Reaction::class)]
     private Collection $reactions;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $blocked = false;
+
     public function __construct()
     {
         $this->reactions = new ArrayCollection();
@@ -123,5 +126,15 @@ class Post implements PostInterface
         }
 
         return null;
+    }
+
+    public function isBlocked(): bool
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(bool $blocked): void
+    {
+        $this->blocked = $blocked;
     }
 }

@@ -29,5 +29,7 @@ Route::group(
         Route::post('api/reaction', [ReactionController::class, 'reaction'])->name('api.reaction');
 
         Route::get('profile', [DashboardController::class, 'profile'])->name('profile');
+
+        Route::get('block/{postId}', [PostController::class, 'block'])->name('block');
     }
 );

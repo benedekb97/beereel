@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Entity\Day;
+use App\Entity\PostInterface;
 use App\Entity\UserInterface;
 use App\Repository\PostRepository;
 use App\Repository\PostRepositoryInterface;
@@ -73,10 +74,18 @@ class DashboardController
             ->getQuery()
             ->getOneOrNullResult();
 
+        $posts = $this->postRepository->getCurrentPosts();
+
+        if (!$this->auth->user()->isAdministrator()) {
+            $posts = array_filter($posts, static function (PostInterface $post) {
+                return !$post->isBlocked();
+            });
+        }
+
         return view('dashboard',
         [
             'day' => $this->currentDayResolver->resolve(),
-            'posts' => $this->postRepository->getCurrentPosts(),
+            'posts' => $posts,
             'currentPost' => $currentPost,
             'nextDay' => $nextDay,
             'user' => $this->auth->user(),

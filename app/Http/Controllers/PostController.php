@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Entity\Post;
+use App\Entity\PostInterface;
 use App\Entity\UserInterface;
 use App\Generator\PostGenerator;
 use App\Generator\PostGeneratorInterface;
@@ -22,6 +24,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PostController extends Controller
 {
@@ -124,6 +127,27 @@ class PostController extends Controller
         $frontFirstFront->save(storage_path('app/public/images/posts/front.' . $this->getUser()->getId() . '.' . $post->getDay()->getId() . '.' . $front->getClientOriginalExtension()), 80);
 
         $post->setImagePath('storage/images/posts/front.' . $this->getUser()->getId() . '.' . $post->getDay()->getId() . '.' . $front->getClientOriginalExtension());
+
+        $this->entityManager->persist($post);
+        $this->entityManager->flush();
+
+        return new RedirectResponse(route('index'));
+    }
+
+    public function block(string $postId): RedirectResponse
+    {
+        if (!$this->getUser()->isAdministrator()) {
+            throw new NotFoundHttpException();
+        }
+
+        /** @var PostInterface $post */
+        $post = $this->entityManager->getRepository(Post::class)->find($postId);
+
+        if (!$post instanceof PostInterface) {
+            return new RedirectResponse(route('index'));
+        }
+
+        $post->setBlocked(!$post->isBlocked());
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();
