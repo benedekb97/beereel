@@ -93,4 +93,13 @@ class DashboardController
 
         return view('create');
     }
+
+    public function profile(): Factory|View|Application|Response
+    {
+        if (!$this->auth->check()) {
+            return new RedirectResponse(route('login'));
+        }
+
+        return view('profile', ['user' => $this->auth->user()]);
+    }
 }

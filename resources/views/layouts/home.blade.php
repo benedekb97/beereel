@@ -20,7 +20,7 @@
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Profilom</a>
+                            <a class="nav-link" href="{{ route('profile') }}">Profilom</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">

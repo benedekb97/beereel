@@ -27,5 +27,7 @@ Route::group(
         Route::post('upload', [PostController::class, 'upload'])->name('upload');
 
         Route::post('api/reaction', [ReactionController::class, 'reaction'])->name('api.reaction');
+
+        Route::get('profile', [DashboardController::class, 'profile'])->name('profile');
     }
 );
