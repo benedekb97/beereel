@@ -68,6 +68,7 @@ class DashboardController
         $nextDay = $dayRepository->createQueryBuilder('o')
             ->where('o.time > :time')
             ->setParameter('time', new \DateTime())
+            ->addOrderBy('o.id', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

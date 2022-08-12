@@ -35,6 +35,7 @@ class CurrentDayResolver implements CurrentDayResolverInterface
         $day = $this->dayRepository->createQueryBuilder('o')
             ->add('where', 'o.time < :now')
             ->setParameter('now', new \DateTime())
+            ->addOrderBy('o.id', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
