@@ -3,7 +3,7 @@
 @section('title', 'Profilom')
 
 @section('content')
-    @foreach ($user->getPosts() as $post)
+    @foreach ($posts as $post)
         <div class="col-lg-6 offset-lg-3 mt-3">
             <div class="card bg-black">
                 <img id="image{{ $post->getId() }}" class="card-img-top" src="{{ asset($post->getFrontImagePath()) }}" onclick="switchTo(event, 'image{{ $post->getId() }}');">
@@ -31,7 +31,7 @@
 @endsection
 
 @section('modals')
-    @foreach($user->getPosts() as $post)
+    @foreach($posts as $post)
 
         <div class="modal fade" id="reactions-{{ $post->getId() }}" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">

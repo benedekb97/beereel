@@ -100,6 +100,8 @@ class DashboardController
             return new RedirectResponse(route('login'));
         }
 
-        return view('profile', ['user' => $this->auth->user()]);
+        $posts = $this->postRepository->getPostsForUser($this->auth->user());
+
+        return view('profile', ['user' => $posts]);
     }
 }

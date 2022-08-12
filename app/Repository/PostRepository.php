@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Post;
+use App\Entity\UserInterface;
 use App\Resolver\CurrentDayResolver;
 use App\Resolver\CurrentDayResolverInterface;
 use Doctrine\ORM\EntityManager;
@@ -30,6 +31,16 @@ class PostRepository implements PostRepositoryInterface
             ->where('o.day = :day')
             ->setParameter('day', $this->currentDayResolver->resolve())
             ->addOrderBy('o.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getPostsForUser(UserInterface $user): array
+    {
+        return $this->entityManager->getRepository(Post::class)->createQueryBuilder('o')
+            ->where('o.user = :user')
+            ->setParameter('user', $user)
+            ->addOrderBy('o.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }
