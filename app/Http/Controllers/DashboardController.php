@@ -102,6 +102,6 @@ class DashboardController
 
         $posts = $this->postRepository->getPostsForUser($this->auth->user());
 
-        return view('profile', ['user' => $posts]);
+        return view('profile', ['posts' => $posts]);
     }
 }
