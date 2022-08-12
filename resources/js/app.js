@@ -1,6 +1,7 @@
 require('jquery');
 require('bootstrap');
 
+import Modal from 'bootstrap';
 import $ from 'jquery';
 window.$ = window.jquery = $;
 
@@ -60,7 +61,10 @@ window.$('.reaction-button').click(
                         $(`#react-${postId}-${e.reactionType}`).removeClass('bg-dark');
                     }
 
-                    $(`#reaction-modal-${postId}`).modal('hide');
+
+                    let modal = new bootstrap.Modal(document.getElementById(`#reaction-modal-${postId}`));
+
+                    modal.hide();
                 },
                 failure: function (e) {
                     console.log(e);
