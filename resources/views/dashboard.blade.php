@@ -1,6 +1,6 @@
 @extends('layouts.home')
 
-@section('title', 'Kagi')
+@section('title', 'BeerEel')
 
 @section('content')
     <input type="hidden" id="reaction-url" value="{{ route('api.reaction') }}">
