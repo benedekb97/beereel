@@ -64,7 +64,7 @@
                     <div class="modal-body">
                         <button type="button" id="close-modal-{{ $post->getId() }}" style="display:none;" data-bs-dismiss="modal">lol geciocsmány de leszarom</button>
                         <div class="row">
-                            <div class="col-2 d-grid">
+                            <div class="col-2 d-grid p-0">
                                 <button type="button" class="
                                 btn border-0 btn-lg reaction-button
                                 @if ($post->getReactionForUser($user) !== null && $post->getReactionForUser($user)->getType() === \App\Entity\ReactionType::LOVE)
@@ -72,7 +72,7 @@
                                 @endif
                                 " style="font-size:20pt;" id="react-{{ $post->getId() }}-LOVE" data-react="LOVE" data-post-id="{{ $post->getId() }}">❤</button>
                             </div>
-                            <div class="col-2 d-grid">
+                            <div class="col-2 d-grid p-0">
                                 <button type="button" class="
                                 btn border-0 btn-lg reaction-button
                                 @if ($post->getReactionForUser($user) !== null && $post->getReactionForUser($user)->getType() === \App\Entity\ReactionType::LOL)
@@ -80,7 +80,7 @@
                                 @endif
                                 " style="font-size:20pt;" id="react-{{ $post->getId() }}-LOL" data-react="LOL" data-post-id="{{ $post->getId() }}">😂</button>
                             </div>
-                            <div class="col-2 d-grid">
+                            <div class="col-2 d-grid p-0">
                                 <button type="button" class="
                                 btn border-0 btn-lg reaction-button
                                 @if ($post->getReactionForUser($user) !== null && $post->getReactionForUser($user)->getType() === \App\Entity\ReactionType::LIKE)
@@ -88,7 +88,7 @@
                                 @endif
                                 " style="font-size:20pt;" id="react-{{ $post->getId() }}-LIKE" data-react="LIKE" data-post-id="{{ $post->getId() }}">👍</button>
                             </div>
-                            <div class="col-2 d-grid">
+                            <div class="col-2 d-grid p-0">
                                 <button type="button" class="
                                 btn border-0 btn-lg reaction-button
                                 @if ($post->getReactionForUser($user) !== null && $post->getReactionForUser($user)->getType() === \App\Entity\ReactionType::WOW)
@@ -96,7 +96,7 @@
                                 @endif
                                 " style="font-size:20pt;" id="react-{{ $post->getId() }}-WOW" data-react="WOW" data-post-id="{{ $post->getId() }}">😮</button>
                             </div>
-                            <div class="col-2 d-grid">
+                            <div class="col-2 d-grid p-0">
                                 <button type="button" class="
                                 btn border-0 btn-lg reaction-button
                                 @if ($post->getReactionForUser($user) !== null && $post->getReactionForUser($user)->getType() === \App\Entity\ReactionType::SMILE)
@@ -104,7 +104,7 @@
                                 @endif
                                 " style="font-size:20pt;" id="react-{{ $post->getId() }}-SMILE" data-react="SMILE" data-post-id="{{ $post->getId() }}">😊</button>
                             </div>
-                            <div class="col-2 d-grid">
+                            <div class="col-2 d-grid p-0">
                                 <button type="button" class="
                                 btn border-0 btn-lg reaction-button
                                 @if ($post->getReactionForUser($user) !== null && $post->getReactionForUser($user)->getType() === \App\Entity\ReactionType::ANGRY)
