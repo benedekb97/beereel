@@ -18,7 +18,7 @@
                 <div class="card-body bg-dark text-white row m-0">
                     <div class="col">
                         {{ $post->getUser()->getUsername() }}<br>
-                        <i>{{ (new Carbon\Carbon($post->getCreatedAt()))->diffForHumans() }}</i>
+                        <small>{{ (new Carbon\Carbon($post->getCreatedAt()))->diffForHumans() }}</small>
                     </div>
                     <div style="text-align:right" class="col">
                         <button
