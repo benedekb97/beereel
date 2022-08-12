@@ -44,7 +44,7 @@
 @section('modals')
     @foreach ($posts as $post)
         <div class="modal fade" id="reactions-{{ $post->getId() }}" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content bg-dark text-white">
                     <div class="modal-body" id="reaction-container-{{ $post->getId() }}">
                         @foreach ($post->getReactions() as $reaction)
@@ -59,7 +59,7 @@
         </div>
         @if ($post->getUser() !== \Auth::user())
         <div class="modal fade" id="reaction-modal-{{ $post->getId() }}" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content bg-dark text-white">
                     <div class="modal-body">
                         <button type="button" id="close-modal-{{ $post->getId() }}" style="display:none;" data-bs-dismiss="modal">lol geciocsmány de leszarom</button>
