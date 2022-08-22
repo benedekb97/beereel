@@ -84,6 +84,6 @@ class AdminController extends Controller
             return $b->getReactions()->count() <=> $a->getReactions()->count();
         });
 
-        return view('admin.posts', ['posts' => $posts]);
+        return view('admin.posts', ['posts' => $posts, 'user' => $this->auth->user()]);
     }
 }
