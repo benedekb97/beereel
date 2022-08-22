@@ -3,6 +3,7 @@
 @section('title', 'Képek')
 
 @section('content')
+    <div class="row">
     @foreach ($posts as $post)
         <div class="col-lg-4 mt-3">
             <div class="card @if($post->isBlocked()) bg-danger @else bg-black @endif">
@@ -40,4 +41,6 @@
             </div>
         </div>
     @endforeach
+
+    </div>
 @endsection
