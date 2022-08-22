@@ -81,7 +81,7 @@ class AdminController extends Controller
         $posts = $this->entityManager->getRepository(Post::class)->findAll();
 
         uasort($posts, static function (PostInterface $a, PostInterface $b) {
-            return $b->getReactions()->count() <=> $a->getReactions()->count();
+            return $b->getId() <=> $a->getId();
         });
 
         return view('admin.posts', ['posts' => $posts, 'user' => $this->auth->user()]);
