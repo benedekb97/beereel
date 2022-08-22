@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Entity\Post;
+use App\Entity\PostInterface;
 use App\Entity\User;
 use App\Entity\UserInterface;
 use Doctrine\ORM\EntityManager;
@@ -72,5 +74,16 @@ class AdminController extends Controller
         $this->entityManager->flush();
 
         return redirect()->back();
+    }
+
+    public function posts(Request $request): Factory|View|Application|Response
+    {
+        $posts = $this->entityManager->getRepository(Post::class)->findAll();
+
+        uasort($posts, static function (PostInterface $a, PostInterface $b) {
+            return $b->getReactions()->count() <=> $a->getReactions()->count();
+        });
+
+        return view('admin.posts', ['posts' => $posts]);
     }
 }

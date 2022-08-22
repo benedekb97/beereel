@@ -52,6 +52,8 @@ Route::group(
                         Route::get('user/{user}/block', [AdminController::class, 'block'])->name('user.block');
 
                         Route::get('block/{postId}', [PostController::class, 'block'])->name('block');
+
+                        Route::get('posts', [AdminController::class, 'posts'])->name('posts');
                     }
                 );
             }

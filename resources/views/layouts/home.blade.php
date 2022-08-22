@@ -26,6 +26,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.users') }}">Felhasználók</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.posts') }}">Képek</a>
+                            </li>
                         @endif
                     </ul>
                     <ul class="navbar-nav ms-auto">
