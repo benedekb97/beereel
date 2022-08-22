@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
     @foreach ($posts as $post)
-        <div class="col-lg-4 mt-3">
+        <div class="col-lg-6 mt-3">
             <div class="card @if($post->isBlocked()) bg-danger @else bg-black @endif">
                 <img id="image{{ $post->getId() }}" class="card-img-top" src="{{ asset($post->getFrontImagePath()) }}" onclick="switchTo(event, 'image{{ $post->getId() }}');">
                 <div class="card-body bg-dark text-white row m-0">
